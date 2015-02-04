@@ -1,4 +1,9 @@
 {
-	"port": 8103,
-	"host": "localhost"
+  "port": 8103,
+  "host": "localhost",
+  "paths": {
+    "static": "./static/",
+    "templates": "./templates/site/",
+    "uploaded": "./uploaded/"
+  }
 }
