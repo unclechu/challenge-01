@@ -1,0 +1,26 @@
+Structure of DB:
+
+	Element:
+		id - mongoid
+		name [required] - string
+		image - string (filename)
+		price [required] - float
+		merchant - mongoid [required]
+		category - mongoid (array)
+
+	Category:
+		id - mongoid
+		name [required] - string
+		parentCategory - mongoid
+
+	Merchant:
+		id - mongoid
+		name [required] - string
+
+Pagination:
+	4 items in row
+	3 rows
+	12 items per page
+
+Search with random letters order between first and last letters.
+Unit tests.
