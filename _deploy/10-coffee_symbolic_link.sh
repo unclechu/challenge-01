@@ -2,7 +2,7 @@
 if [ -z "$PARENT_DEPLOY_SCRIPT" ]; then YOUR_SUBJECT="./_deploy/$(basename "$0")" WD="$(dirname "$0")/../" ../deploy.sh; exit "$?"; fi
 
 info_inline "Creating symbolic link to coffee-script cli"
-rm ./gulp &>/dev/null
+rm ./coffee &>/dev/null
 
 target='./node_modules/.bin/coffee'
 
