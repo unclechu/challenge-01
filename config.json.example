@@ -10,5 +10,6 @@
     "port": null,
     "host": "localhost",
     "database": "challenge-01"
-  }
+  },
+  "lang": "en"
 }

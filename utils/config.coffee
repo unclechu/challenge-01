@@ -13,4 +13,6 @@ config.mongo.port = env.MONGO_PORT if env.MONGO_PORT?
 config.mongo.host = env.MONGO_HOST if env.MONGO_HOST?
 config.mongo.database = env.MONGO_DATABASE if env.MONGO_DATABASE?
 
+config.lang = env.APP_LANG if env.APP_LANG?
+
 module.exports = config

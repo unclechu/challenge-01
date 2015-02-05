@@ -1,7 +1,28 @@
 doctype html
-html(lang="en")
+html(lang=lang)
 	head
 		meta(charset="utf-8")
-		title Catalog
-	body
-		block page_content
+		title= pageTitle
+		script(src=staticUrl("semantic-ui/semantic.min.js"))
+		link(
+			href=staticUrl("semantic-ui/semantic.min.css")
+			rel="stylesheet"
+			type="text/css")
+		link(
+			href=staticUrl("site-build.css")
+			rel="stylesheet"
+			type="text/css")
+	body.pushable
+		.pusher
+			.full.height
+				.ui.stripe.vertical.segment
+					.ui.stackable.very.relaxed.page.grid
+						.three.column.computer.one.column.mobile.demo.row
+							h1= pageTitle
+							block page_content
+			.ui.inverted.black.footer.vertical.segment
+				.container
+					.ui.stackable.inverted.divided.relaxed.grid
+						.eight.wide.column
+							p Author: Viacheslav Lotsmanov
+							p License: GNU/AGPLv3
