@@ -5,5 +5,10 @@
     "static": "./static/",
     "templates": "./templates/site/",
     "uploaded": "./uploaded/"
+  },
+  "mongo": {
+    "port": null,
+    "host": "localhost",
+    "database": "challenge-01"
   }
 }

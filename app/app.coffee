@@ -1,7 +1,7 @@
 path = require 'path'
 express = require 'express'
 
-config = require '../config.json'
+config = require '../utils/config'
 site = require '../site/site'
 
 app = express()
