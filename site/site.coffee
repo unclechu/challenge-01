@@ -1,24 +1,14 @@
+path = require 'path'
 express = require 'express'
-jade = require 'jade'
 
 config = require '../config.json'
 router = require './router'
 
 site = express()
-site.engine 'jade', jade.__express
 
-methods = ['get', 'post']
+site.set 'views', path.join process.cwd(), config.paths.templates
+site.set 'view engine', 'jade'
 
-applyRouter = (app, router) ->
-	for route in router
-		handler = new route.handler()
-		do (handler) ->
-			for method in methods
-				if method of handler
-					do (method) ->
-						app[method] route.url, ->
-							handler[method].apply null, arguments
-
-applyRouter(site, router)
+router.applyRouter(site)
 
 module.exports = site

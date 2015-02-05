@@ -2,4 +2,9 @@ config.json
 uploaded
 
 node_modules
+bower_components
+front-end-gulp
 coffee
+
+static/*-build.css
+static/*-build.js
