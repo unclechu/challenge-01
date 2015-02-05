@@ -2,13 +2,13 @@ local = require '../../utils/localization'
 
 {RequestHandler} = require './request-handler'
 
-class MainPageHandler extends RequestHandler
-	template: 'catalog-categories'
+class SearchPageHandler extends RequestHandler
+	template: 'catalog-search'
 	constructor: ->
 		super
-		@data.pageTitle = local.sections.catalogCategories
+		@data.pageTitle = local.sections.search
 	get: (req, res) =>
 		data = @getChargedData req
 		res.render @template, data
 
-module.exports = {MainPageHandler}
+module.exports = {SearchPageHandler}

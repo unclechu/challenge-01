@@ -1,8 +1,11 @@
 {
   "en": {
-    "pageTitles": {
+    "menu": "Menu",
+    "sections": {
+      "catalogCategories": "Catalog categories",
       "catalogList": "Catalog list",
-      "catalogItem": "Catalog item"
+      "catalogItem": "Catalog item",
+      "search": "Search"
     }
   }
 }
