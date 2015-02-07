@@ -7,6 +7,7 @@ class HelpersMixin
 		relUrl: (baseUrl, relPath) ->
 			return relPath if relPath.charAt(0) isnt '/'
 			path.join baseUrl, relPath.slice(1)
+		uploadedUrl: (relPath) -> path.join '/uploaded/', relPath
 	getChargedHelpers: (req, cb) ->
 		helpers = {}
 		helpers[key] = @helpers[key] for key of @helpers

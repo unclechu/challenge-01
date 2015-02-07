@@ -3,4 +3,14 @@ extends ../../layout
 block pageContent
 	include inc/categories
 
-	h2 ^_^
+	.catalog-category-elements.ui.segment
+		h3= local.catalog.categoryElements
+
+		.four.column.row
+			each item in catalogElements
+				.column
+					.ui.card
+						.image
+							img(alt=item.name, src=item.picture)
+						.content
+							.name= item.name

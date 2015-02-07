@@ -6,6 +6,9 @@
       "catalogList": "Catalog list",
       "catalogItem": "Catalog item",
       "search": "Search"
+    },
+    "catalog": {
+      "categoryElements": "Category elements"
     }
   }
 }

@@ -15,12 +15,22 @@ class BasicDataMixin extends virtualClass HelpersMixin, MenuDataMixin, CatalogCa
 			@getChargedMenu req, (err, menu) =>
 				return cb err if err
 				data.menu = menu
+				jump1 = =>
+					if 'elementsList' in @requiredData
+						@getChargedCatalogElements req, (err, list) =>
+							return cb err if err
+							data.catalogElements = list
+							jump2()
+					else
+						jump2()
+				jump2 = =>
+					cb null, data
 				if 'categoriesList' in @requiredData
 					@getChargedCatalogCategories req, (err, list) =>
 						return cb err if err
 						data.catalogCategories = list
-						cb null, data
+						jump1()
 				else
-					cb null, data
+					jump1()
 
 module.exports = {BasicDataMixin}

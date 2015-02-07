@@ -9,8 +9,9 @@ class CategoryPageHandler extends RequestHandler
 	template: 'pages/catalog/category'
 	constructor: ->
 		super
-	requiredData: ['categoriesList']
+	requiredData: ['categoriesList', 'elementsList']
 	get: (req, res) =>
+		@categoryId = req.params[0]
 		@getChargedData req, (err, data) =>
 			if err
 				console.error 'Cannot get charged data:\n', err
