@@ -24,6 +24,14 @@ class BasicDataMixin extends virtualClass HelpersMixin, MenuDataMixin, CatalogCa
 					else
 						jump2()
 				jump2 = =>
+					if 'elementsPagination' in @requiredData
+						@getCatalogElementsPagination req, (err, list) =>
+							return cb err if err
+							data.catalogElementsPagination = list
+							complete()
+					else
+						complete()
+				complete = =>
 					cb null, data
 				if 'categoriesList' in @requiredData
 					@getChargedCatalogCategories req, (err, list) =>

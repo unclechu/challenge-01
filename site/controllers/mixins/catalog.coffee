@@ -1,3 +1,7 @@
+{parse: urlParse} = require 'url'
+
+config = require '../../../config'
+
 {CatalogCategoryModel, CatalogElementModel} = require '../../models/catalog'
 {MerchantModel} = require '../../models/merchant'
 
@@ -20,11 +24,10 @@ class CatalogCategoriesMixin
 
 			cb null, menu
 
-	getChargedCatalogElements: (req, cb) ->
-		return cb new Error 'No helpers for getChargedCatalogCategories()' unless @helpers?
+	getElements = ({req, cb, page, skip, limit}) ->
 		menu = []
-
-		CatalogElementModel.find categories: @categoryId, (err, list) =>
+		CatalogElementModel.find \
+		{categories: @categoryId}, null, {skip, limit}, (err, list) =>
 			return cb err if err
 
 			start = ->
@@ -67,5 +70,38 @@ class CatalogCategoriesMixin
 					start()
 
 			start()
+
+	getPageInfo = (req, cb) ->
+		CatalogElementModel.count {categories: @categoryId}, (err, count) =>
+			return cb err if err
+			page = parseInt req.query[config.catalog.elementsPaginationVar], 10
+			page = 1 if isNaN page
+			skip = config.catalog.elementsOnPage * (page - 1)
+			limit = config.catalog.elementsOnPage
+			totalPages = Math.ceil count / limit
+			if page < 1 or page > totalPages
+				skip = 0
+				limit = 0
+			cb null, {page, skip, limit, totalPages}
+
+	getChargedCatalogElements: (req, cb) ->
+		return cb new Error 'No helpers for getChargedCatalogCategories()' unless @helpers?
+		getPageInfo.call @, req, (err, {page, skip, limit, totalPages}) =>
+			return cb err if err
+			getElements.call @, {req, cb, page, skip, limit}
+
+	getCatalogElementsPagination: (req, cb) ->
+		getPageInfo.call @, req, (err, {page, skip, limit, totalPages}) =>
+			return cb err if err
+			menu = []
+			for pageNum in [1..totalPages]
+				menu.push do (obj={}) =>
+					obj.link = urlParse(req.originalUrl).pathname
+					obj.link += "?#{config.catalog.elementsPaginationVar}=#{pageNum}" if pageNum > 1
+					obj.title = pageNum
+					obj.active = if pageNum is page then true else false
+					obj
+			cb null, menu
+
 
 module.exports = {CatalogCategoriesMixin}

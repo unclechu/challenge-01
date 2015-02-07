@@ -1,0 +1,5 @@
+each item in catalogElementsPagination
+	if item.active
+		span.ui.button.disabled= item.title
+	else
+		a.ui.button(href=item.link)= item.title

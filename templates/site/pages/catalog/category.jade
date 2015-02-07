@@ -6,6 +6,10 @@ block pageContent
 	.catalog-category-elements.ui.segment
 		h3.header= local.catalog.categoryElements
 
+		if catalogElementsPagination && catalogElementsPagination.length > 1
+			.pagination.top.ui.buttons
+				include inc/elements-pagination
+
 		.ui.four.column.grid
 			each item in catalogElements
 				.column
@@ -21,3 +25,7 @@ block pageContent
 								.ui.bulleted.link.list
 									each category in item.categories
 										.item= category.name
+
+		if catalogElementsPagination && catalogElementsPagination.length > 1
+			.pagination.bottom.ui.buttons
+				include inc/elements-pagination

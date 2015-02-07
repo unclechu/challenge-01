@@ -6,6 +6,10 @@
     "templates": "./templates/site/",
     "uploaded": "./uploaded/"
   },
+  "catalog": {
+    "elementsOnPage": 12,
+    "elementsPaginationVar": "page"
+  },
   "mongo": {
     "port": null,
     "host": "localhost",
