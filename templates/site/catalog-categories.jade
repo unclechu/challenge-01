@@ -2,14 +2,11 @@ extends layout
 
 block pageContent
 	.ui.bulleted.link.list
-		a(href="/category_12345/").item Category name
-		a(href="/category_12345/").item Category name
-	//ul.items
-		//li
-			//a(href="/1234556.html")
-				//.picture
-					//img(alt="^_^")
-				//.name Name
-				//.price 2134.2
-				//.merchant
-					//Merchant: %USERNAME%
+		each item in catalogCategories
+			if current
+				span.item= item.name
+			else
+				if active
+					a(href=item.link).item.active= item.name
+				else
+					a(href=item.link).item= item.name

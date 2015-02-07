@@ -4,6 +4,7 @@ mongoose = require 'mongoose'
 
 config = require '../utils/config'
 site = require '../site/site'
+require '../utils/mongoose'
 
 app = express()
 

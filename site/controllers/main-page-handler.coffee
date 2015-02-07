@@ -7,8 +7,12 @@ class MainPageHandler extends RequestHandler
 	constructor: ->
 		super
 		@data.pageTitle = local.sections.catalogCategories
+	requiredData: ['categoriesList']
 	get: (req, res) =>
-		data = @getChargedData req
-		res.render @template, data
+		@getChargedData req, (err, data) =>
+			if err
+				console.error 'Cannot get charged data:\n', err
+				return @serverFail req, res
+			res.render @template, data
 
 module.exports = {MainPageHandler}

@@ -1,18 +1,15 @@
 local = require '../../../utils/localization'
 
 class MenuDataMixin
-	data: {}
-	constructor: ->
-		@data.menu = [
+	getChargedMenu: (req, cb) ->
+		return cb new Error 'No helpers for getChargedMenu()' unless @helpers?
+		menu = [
 			href: '/'
 			title: local.sections.catalogCategories
 		,
 			href: '/search'
 			title: local.sections.search
 		]
-		super
-	getChargedMenu: (req) ->
-		menu = (item for item in @data.menu)
 		newMenu = []
 		for item in menu
 			newItem = {}
@@ -28,6 +25,6 @@ class MenuDataMixin
 				else
 					newItem[key] = item[key]
 			newMenu.push newItem
-		newMenu
+		cb null, newMenu
 
 module.exports = {MenuDataMixin}

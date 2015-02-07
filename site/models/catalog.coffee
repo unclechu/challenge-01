@@ -28,7 +28,7 @@ catalogCaterogySchema = new Schema
 		type: String
 		required: true
 
-CatalogCaterogyModel = mongoose.model \
+CatalogCategoryModel = mongoose.model \
 	'catalog_categories', catalogCaterogySchema
 
 
@@ -36,5 +36,5 @@ module.exports = {
 	catalogElementSchema
 	CatalogElementModel
 	catalogCaterogySchema
-	CatalogCaterogyModel
+	CatalogCategoryModel
 }

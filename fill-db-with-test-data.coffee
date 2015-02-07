@@ -3,7 +3,7 @@
 mongoose = require 'mongoose'
 
 require './utils/mongoose'
-{CatalogElementModel, CatalogCaterogyModel} = require './site/models/catalog'
+{CatalogElementModel, CatalogCategoryModel} = require './site/models/catalog'
 {MerchantModel} = require './site/models/merchant'
 
 ObjectId = mongoose.Schema.ObjectId
