@@ -15,6 +15,7 @@ block pageContent
 						.content
 							h4.name.header= item.name
 							.price <b>#{local.catalog.price}:</b> #{item.price.toFixed(2)} #{local.catalog.currency}
+							.merchant <b>#{local.catalog.merchant}:</b> #{item.merchant.name}
 							.categories
 								h5= local.catalog.categories
 								.ui.bulleted.link.list

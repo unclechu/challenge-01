@@ -1,4 +1,5 @@
 {CatalogCategoryModel, CatalogElementModel} = require '../../models/catalog'
+{MerchantModel} = require '../../models/merchant'
 
 class CatalogCategoriesMixin
 	getChargedCatalogCategories: (req, cb) ->
@@ -46,7 +47,7 @@ class CatalogCategoriesMixin
 						getElementsLoop()
 
 					getCategoriesLoop = =>
-						return getMerchantsLoop() if item.categories.length <= 0
+						return getMerchants() if item.categories.length <= 0
 						CatalogCategoryModel.findOne \
 						_id: item.categories.shift(), (err, category) ->
 							return cb err if err
@@ -55,8 +56,13 @@ class CatalogCategoriesMixin
 								obj
 							getCategoriesLoop()
 
-					getMerchantsLoop = =>
-						complete()
+					getMerchants = =>
+						MerchantModel.findOne _id: item.merchant, (err, merchant) ->
+							return cb err if err
+							obj.merchant = do (obj={}) ->
+								obj[key] = merchant[key] for key of merchant when key in ['_id', 'name']
+								obj
+							complete()
 
 					start()
 
