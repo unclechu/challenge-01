@@ -8,7 +8,11 @@
       "search": "Search"
     },
     "catalog": {
-      "categoryElements": "Category elements"
+      "categoryElements": "Category elements",
+      "currency": "£",
+      "price": "Price",
+      "categories": "Categories",
+      "merchant": "Merchant"
     }
   }
 }

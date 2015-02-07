@@ -4,13 +4,19 @@ block pageContent
 	include inc/categories
 
 	.catalog-category-elements.ui.segment
-		h3= local.catalog.categoryElements
+		h3.header= local.catalog.categoryElements
 
-		.four.column.row
+		.ui.four.column.grid
 			each item in catalogElements
 				.column
 					.ui.card
 						.image
 							img(alt=item.name, src=item.picture)
 						.content
-							.name= item.name
+							h4.name.header= item.name
+							.price <b>#{local.catalog.price}:</b> #{item.price.toFixed(2)} #{local.catalog.currency}
+							.categories
+								h5= local.catalog.categories
+								.ui.bulleted.link.list
+									each category in item.categories
+										.item= category.name

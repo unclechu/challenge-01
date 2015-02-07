@@ -36,7 +36,6 @@ class CatalogCategoriesMixin
 				do (item=list.shift(), obj={}, start=null, complete=null) =>
 					obj[key] = item[key]\
 						for key of item when key in ['_id', 'name', 'price']
-					obj.price = obj.price.toFixed 2
 					obj.categories = []
 					obj.picture = @helpers.uploadedUrl item.image
 
