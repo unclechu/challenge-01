@@ -13,7 +13,7 @@ class CatalogCategoriesMixin
 				obj[key] = item[key]\
 					for key of item when key in ['_id', 'name']
 				link = "/section_#{obj._id}.html"
-				obj.active = if link.indexOf(req.url) is 0 and req.url isnt '/' then true else false
+				obj.active = if req.url.indexOf(link) is 0 and req.url isnt '/' then true else false
 				obj.current = if obj.active and link is req.url then true else false
 				obj.link = @helpers.relUrl req.baseUrl, link
 				menu.push obj

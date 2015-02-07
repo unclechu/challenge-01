@@ -5,7 +5,7 @@ class MenuDataMixin
 		return cb new Error 'No helpers for getChargedMenu()' unless @helpers?
 		menu = [
 			href: '/'
-			title: local.sections.catalogCategories
+			title: local.sections.main
 		,
 			href: '/search'
 			title: local.sections.search
