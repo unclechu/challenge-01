@@ -8,10 +8,13 @@ require '../utils/mongoose'
 
 app = express()
 
-app.use '/catalog/', site
+app.use '/catalog', site
 
-app.use '/static/', express.static path.join process.cwd(), config.paths.static
-app.use '/uploaded/', express.static path.join process.cwd(), config.paths.uploaded
+app.use '/static', express.static path.join process.cwd(), config.paths.static
+app.use '/uploaded', express.static path.join process.cwd(), config.paths.uploaded
+
+app.use /^\/$/, (req, res) -> res.status(302).redirect '/catalog'
+app.use '*', (req, res) -> res.status(404).end '404 Not Found'
 
 app.listen config.port, config.host, ->
 	unless config.host

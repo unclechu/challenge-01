@@ -1,5 +1,7 @@
 {MainPageHandler} = require './controllers/main-page-handler'
+{CategoryPageHandler} = require './controllers/category-page-handler'
 {SearchPageHandler} = require './controllers/search-page-handler'
+{Error404PageHandler} = require './controllers/error-404-page-handler'
 
 methods = ['get', 'post']
 
@@ -9,6 +11,12 @@ routes = [
 ,
 	url: '/search/'
 	handler: SearchPageHandler
+,
+	url: /^\/section_([0-9a-z]+)\.html$/
+	handler: CategoryPageHandler
+,
+	url: '*'
+	handler: Error404PageHandler
 ]
 
 applyRouter = (app, _routes=routes, _methods=methods) ->

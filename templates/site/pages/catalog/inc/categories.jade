@@ -1,11 +1,12 @@
-.ui.segment
+.catalog-categories-menu.ui.segment
 	h3= local.sections.catalogCategories
-	.ui.bulleted.link.list
-		each item in catalogCategories
-			if current
-				span.item= item.name
-			else
-				if active
-					a(href=item.link).item.active= item.name
+	nav
+		.ui.bulleted.link.list
+			each item in catalogCategories
+				if item.current
+					span.item.active= item.name
 				else
-					a(href=item.link).item= item.name
+					if item.active
+						a(href=item.link).item.active= item.name
+					else
+						a(href=item.link).item= item.name
