@@ -1,19 +1,19 @@
 mongoose = require 'mongoose'
 
 Schema = mongoose.Schema
-ObjectId = Schema.Types.ObjectId
+ObjectId = Schema.ObjectId
 
 
 merchantSchema = new Schema
-	id:
-		ObjectId
-		required: true
 	name:
 		type: String
 		required: true
 
 MerchantModel = mongoose.model \
-	'MerchantModel', merchantSchema
+	'merchants', merchantSchema
 
 
-module.exports = {MerchantModel}
+module.exports = {
+	merchantSchema
+	MerchantModel
+}

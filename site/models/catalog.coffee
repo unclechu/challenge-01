@@ -1,41 +1,40 @@
 mongoose = require 'mongoose'
 
 Schema = mongoose.Schema
-ObjectId = Schema.Types.ObjectId
+ObjectId = Schema.ObjectId
 
 
 catalogElementSchema = new Schema
-	id:
-		ObjectId
-		required: true
 	name:
 		type: String
 		required: true
 	image:
 		type: String
 	price:
-		type: Float
+		type: Number
 		required: true
 	merchant:
 		type: ObjectId
 		required: true
-	category:
+	categories:
 		type: [ObjectId]
 
 CatalogElementModel = mongoose.model \
-	'CatalogElementModel', catalogElementSchema
+	'catalog_elements', catalogElementSchema
 
 
 catalogCaterogySchema = new Schema
-	id:
-		ObjectId
-		required: true
 	name:
 		type: String
 		required: true
 
 CatalogCaterogyModel = mongoose.model \
-	'CatalogCaterogyModel', catalogCaterogySchema
+	'catalog_categories', catalogCaterogySchema
 
 
-module.exports = {CatalogElementModel, CatalogCaterogyModel}
+module.exports = {
+	catalogElementSchema
+	CatalogElementModel
+	catalogCaterogySchema
+	CatalogCaterogyModel
+}
