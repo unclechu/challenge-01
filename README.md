@@ -20,8 +20,16 @@
 
 4. Copy [config.json.example](./config.json.example) to `config.json` and do changes in `config.json` if you need it;
 
-5. Run start script:
+5. Fill database with some test data:
+
+  ```bash
+  $ ./fill-db-with-test-data.coffee
+  ```
+
+6. Run start script:
 
   ```bash
   $ ./start.sh
   ```
+  
+  And open page in browser.
