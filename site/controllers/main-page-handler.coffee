@@ -3,7 +3,7 @@ local = require '../../utils/localization'
 {RequestHandler} = require './request-handler'
 
 class MainPageHandler extends RequestHandler
-	template: 'catalog-categories'
+	template: 'pages/catalog/main'
 	constructor: ->
 		super
 		@data.pageTitle = local.sections.catalogCategories

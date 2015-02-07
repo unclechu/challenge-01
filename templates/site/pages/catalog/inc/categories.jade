@@ -1,6 +1,5 @@
-extends layout
-
-block pageContent
+.ui.segment
+	h3= local.sections.catalogCategories
 	.ui.bulleted.link.list
 		each item in catalogCategories
 			if current
