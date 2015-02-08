@@ -1,4 +1,10 @@
 extends ../../layout
 
 block pageContent
-	| test
+	form.catalog-search-form(method="post")
+		.ui.action.input
+			input(type="text", placeholder=local.catalog.search.textPlaceholder)
+			.ui.button
+				button
+					i.search.icon
+					=local.catalog.search.search

@@ -13,7 +13,11 @@
       "currency": "£",
       "price": "Price",
       "categories": "Categories",
-      "merchant": "Merchant"
+      "merchant": "Merchant",
+      "search": {
+        "textPlaceholder": "Search text...",
+        "search": "Search"
+      }
     }
   }
 }
