@@ -152,13 +152,13 @@ itemsFill = ->
 	for item, i in catalogItems
 		do (categories=[], i, item) ->
 			if i < 5
-				CatalogCaterogyModel.findOne name: 'foo', (err, elem) ->
+				CatalogCategoryModel.findOne name: 'foo', (err, elem) ->
 					if err
 						console.error "Cannot find category by name 'foo':\n", err
 					categories.push elem._id
 					addItem categories, i, item
 			else if i < 10
-				CatalogCaterogyModel.findOne name: 'bar', (err, elem) ->
+				CatalogCategoryModel.findOne name: 'bar', (err, elem) ->
 					if err
 						console.error "Cannot find category by name 'bar':\n", err
 					categories.push elem._id
@@ -172,11 +172,11 @@ itemsFill = ->
 						)
 					categories.push elem._id
 					addItem categories, i, item
-				CatalogCaterogyModel.findOne name: 'bar', (err, elem) ->
+				CatalogCategoryModel.findOne name: 'bar', (err, elem) ->
 					if err
 						console.error "Cannot find category by name 'bar':\n", err
 					categories.push elem._id
-					CatalogCaterogyModel.findOne name: 'another category', cb2
+					CatalogCategoryModel.findOne name: 'another category', cb2
 
 isCatalogCategoriesFilled = no
 isCatalogItemsFilled = no
@@ -202,7 +202,7 @@ completeTrigger = ->
 	mongoose.disconnect()
 
 for item in catalogCategories
-	modelItem = new CatalogCaterogyModel()
+	modelItem = new CatalogCategoryModel()
 	modelItem.name = item.name
 	modelItem.save (err) ->
 		console.error 'Cannot create catalog category:\n', err if err
