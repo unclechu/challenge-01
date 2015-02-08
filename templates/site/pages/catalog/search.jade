@@ -1,10 +1,17 @@
 extends ../../layout
 
 block pageContent
-	form.catalog-search-form(method="post")
+	form.catalog-search-form(method="get")
 		.ui.action.input
-			input(type="text", placeholder=local.catalog.search.textPlaceholder)
+			input(
+				type="text"
+				name="q"
+				placeholder=local.catalog.search.textPlaceholder
+				value=searchQuery
+			)
 			.ui.button
 				button
 					i.search.icon
 					=local.catalog.search.search
+	if catalogElements && catalogElementsPagination
+		include inc/elements-block

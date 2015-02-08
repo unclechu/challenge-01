@@ -1,4 +1,6 @@
+lunr = require 'lunr'
 {parse: urlParse} = require 'url'
+qs = require 'querystring'
 
 config = require '../../../config'
 
@@ -24,16 +26,49 @@ class CatalogCategoriesMixin
 
 			cb null, menu
 
-	getElements = ({req, cb, page, skip, limit}) ->
+	descSearchSortByScore = (a, b) ->
+		if a.score < b.score
+			1
+		else if a.score > b.score
+			-1
+		else
+			0
+
+	searchFilter = (searchText, menu) ->
+		newMenu = []
+		idx = lunr ->
+			@ref '_id'
+			@field 'name'
+			@field 'price'
+			@field 'categories'
+			@field 'merchant'
+		for item in menu
+			idx.add
+				_id: item._id
+				name: item.name
+				price: item.price.toString()
+				categories: (x.name for x in item.categories).join ' '
+				merchant: item.merchant.name
+		res = idx.search searchText
+		newMenu = []
+		for menuItem in menu
+			for searchItem in res
+				if searchItem.ref.toString() is menuItem._id.toString()
+					menuItem.score = searchItem.score
+					newMenu.push menuItem
+		newMenu.sort descSearchSortByScore
+		newMenu
+
+	getElements = ({req, cb, page, skip, limit, ids}) ->
 		menu = []
-		CatalogElementModel.find \
-		{categories: @categoryId}, null, {skip, limit}, (err, list) =>
+
+		getListCb = (err, list) =>
 			return cb err if err
 
 			start = ->
 				getElementsLoop()
 			complete = ->
-				cb null, menu
+				completeCb null, menu
 
 			getElementsLoop = =>
 				return complete() if list.length <= 0
@@ -71,9 +106,37 @@ class CatalogCategoriesMixin
 
 			start()
 
+		if req.catalogElementsBySearch?
+			query = {}
+			fields = null
+			options = {skip, limit}
+			options = null unless page?
+			completeCb = (err, menu) =>
+				return cb err if err
+				menu = searchFilter req.query.q, menu unless ids?
+				cb null, menu
+			if ids
+				CatalogElementModel.find query, fields, options
+					.where('_id').in ids
+					.exec getListCb
+			else
+				CatalogElementModel.find query, fields, options, getListCb
+		else
+			query = categories: @categoryId
+			fields = null
+			options = {skip, limit}
+			completeCb = (err, menu) =>
+				return cb err if err
+				cb null, menu
+			CatalogElementModel.find query, fields, options, getListCb
+
 	getPageInfo = (req, cb) ->
-		CatalogElementModel.count {categories: @categoryId}, (err, count) =>
+		getElementsCb = (err, menu) ->
 			return cb err if err
+			count = menu.length
+
+			ids = (x._id.toString() for x in menu)
+
 			page = parseInt req.query[config.catalog.elementsPaginationVar], 10
 			page = 1 if isNaN page
 			skip = config.catalog.elementsOnPage * (page - 1)
@@ -82,22 +145,32 @@ class CatalogCategoriesMixin
 			if page < 1 or page > totalPages
 				skip = 0
 				limit = 0
-			cb null, {page, skip, limit, totalPages}
+
+			cb null, {page, skip, limit, totalPages, ids}
+
+		getElements.call @, {req, cb:getElementsCb, page:null, skip:null, limit:null, ids:null}
 
 	getChargedCatalogElements: (req, cb) ->
 		return cb new Error 'No helpers for getChargedCatalogCategories()' unless @helpers?
-		getPageInfo.call @, req, (err, {page, skip, limit, totalPages}) =>
+		getPageInfo.call @, req, (err, {page, skip, limit, totalPages, ids}) =>
 			return cb err if err
-			getElements.call @, {req, cb, page, skip, limit}
+			getElements.call @, {req, cb, page, skip, limit, ids}
 
 	getCatalogElementsPagination: (req, cb) ->
 		getPageInfo.call @, req, (err, {page, skip, limit, totalPages}) =>
 			return cb err if err
 			menu = []
+			pagiVar = config.catalog.elementsPaginationVar
+			return cb null, menu if totalPages <= 0
 			for pageNum in [1..totalPages]
 				menu.push do (obj={}) =>
-					obj.link = urlParse(req.originalUrl).pathname
-					obj.link += "?#{config.catalog.elementsPaginationVar}=#{pageNum}" if pageNum > 1
+					url = urlParse req.originalUrl
+					query = qs.parse url.query
+					query[pagiVar] = pageNum
+					delete query[pagiVar] if pageNum is 1
+					query = qs.stringify query
+					obj.link = url.pathname
+					obj.link += "?#{query}" if query isnt ''
 					obj.title = pageNum
 					obj.active = if pageNum is page then true else false
 					obj
